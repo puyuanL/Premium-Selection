@@ -18,17 +18,17 @@ public class Knife4jConfig {
                 .build();
     }
 
-    /***
-     * @description 自定义接口信息
+    /**
+     * @description Custom Interface Information
      */
     @Bean
     public OpenAPI customOpenAPI() {
 
         return new OpenAPI()
                 .info(new Info()
-                        .title("尚品甑选API接口文档")
+                        .title("Premium Selection API DOC")
                         .version("1.0")
-                        .description("尚品甑选API接口文档")
+                        .description("Premium Selection API DOC")
                         .contact(new Contact().name("lpy"))); // 设定作者
     }
 
