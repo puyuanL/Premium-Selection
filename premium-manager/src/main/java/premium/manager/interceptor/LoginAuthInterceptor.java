@@ -29,7 +29,7 @@ public class LoginAuthInterceptor implements HandlerInterceptor {
         // way of request (get or post)
         // options -> Pre-inspection request -> pass
         String method = request.getMethod();
-        if(method.equals("OPTIONS")) {
+        if("OPTIONS".equals(method)) {
             return true;
         }
         // get token
@@ -41,7 +41,7 @@ public class LoginAuthInterceptor implements HandlerInterceptor {
         }
         // not null -> find data in redis
         // can't find data in redis, return wrong prompt
-        String userInfoString = redisTemplate.opsForValue().get("user:login:" + token);
+        String userInfoString = redisTemplate.opsForValue().get("user:login" + token);
         if (StrUtil.isEmpty(userInfoString)) {
             responseNoLoginInfo(response);
             return false;
@@ -52,7 +52,7 @@ public class LoginAuthInterceptor implements HandlerInterceptor {
         AuthContextUtil.set(user);
 
         // update user data timeout info & pass
-        redisTemplate.expire("user:login:" + token, 30, TimeUnit.MINUTES);
+        redisTemplate.expire("user:login" + token, 30, TimeUnit.MINUTES);
         return true;
     }
 
