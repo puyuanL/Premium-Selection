@@ -24,4 +24,3 @@ premium:
     noAuthUrls:
       - "/admin/system/index/login"
       - "/admin/system/index/generateValidateCode"
-      - "/admin/system/index/getUserInfo"
