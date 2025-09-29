@@ -4,7 +4,7 @@
     <contextName>logback</contextName>
 
     <!-- 日志的输出目录 -->
-    <property name="log.path" value="D://logs//spzx-manager//logs" />
+    <property name="log.path" value="E://JavaProj//Projects//PremiumSelection//premium_logs" />
 
     <!--控制台日志格式：彩色日志-->
     <!-- magenta:洋红 -->
@@ -44,8 +44,8 @@
 
     <!-- 开发环境 -->
     <springProfile name="dev">
-        <!-- com.atguigu日志记录器：业务程序INFO级别  -->
-        <logger name="com.atguigu" level="INFO" />
+        <!-- premium日志记录器：业务程序INFO级别  -->
+        <logger name="premium" level="INFO" />
         <!-- 根日志记录器：INFO级别  -->
         <root level="INFO">
             <appender-ref ref="CONSOLE" />

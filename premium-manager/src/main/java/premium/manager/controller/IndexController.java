@@ -16,6 +16,7 @@ import premium.model.vo.system.LoginVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import premium.manager.service.SysUserService;
 import premium.model.vo.system.ValidateCodeVo;
+import premium.utils.AuthContextUtil;
 
 @Tag(name = "用户接口")
 @RestController
@@ -57,14 +58,18 @@ public class IndexController {
      * Get current user login info
      */
     @GetMapping("/getUserInfo")
-    public Result getUserInfo(@RequestHeader(name = "token") String token) {
-        // 1 get token from request
-        // String token = request.getHeader("token")
-        // 2 get redis of user info by token
-        SysUser sysuser = sysUserService.getUserInfo(token);
-        // 3 return user info
-        return Result.build(sysuser, ResultCodeEnum.SUCCESS);
+    public Result getUserInfo() {
+        return Result.build(AuthContextUtil.get(), ResultCodeEnum.SUCCESS);
     }
+//    @GetMapping("/getUserInfo")
+//    public Result getUserInfo(@RequestHeader(name = "token") String token) {
+//        // 1 get token from request
+//        // String token = request.getHeader("token")
+//        // 2 get redis of user info by token
+//        SysUser sysUser = sysUserService.getUserInfo(token);
+//        // 3 return user info
+//        return Result.build(sysUser, ResultCodeEnum.SUCCESS);
+//    }
 
     /**
      *
