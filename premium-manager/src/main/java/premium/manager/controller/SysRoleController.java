@@ -28,4 +28,32 @@ public class SysRoleController {
         PageInfo<SysRole> pageInfo = sysRoleService.findByPage(sysRoleDto, pageNum, pageSize);
         return Result.build(pageInfo, ResultCodeEnum.SUCCESS);
     }
+
+    /**
+     * Role Add method
+     */
+    @PostMapping("/saveSysRole")
+    public Result saveSysRole(@RequestBody SysRole sysRole) {
+        sysRoleService.saveSysRole(sysRole);
+        return Result.build(null, ResultCodeEnum.SUCCESS);
+    }
+
+    /**
+     * Role Edit method
+     */
+    @PutMapping("/updateSysRole")
+    public Result updateSysRole(@RequestBody SysRole sysRole) {
+        sysRoleService.updateSysRole(sysRole);
+        return Result.build(null, ResultCodeEnum.SUCCESS);
+    }
+
+    /**
+     * Role Delete method
+     */
+    @DeleteMapping("/deleteById/{roleId}")
+    public Result deleteById(@PathVariable Long roleId) {
+        sysRoleService.deleteById(roleId);
+        return Result.build(null, ResultCodeEnum.SUCCESS);
+    }
+
 }
