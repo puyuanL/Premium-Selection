@@ -3,8 +3,11 @@ package premium.manager.service.Impl;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import premium.common.exception.MyException;
 import premium.model.dto.system.LoginDto;
+import premium.model.dto.system.SysUserDto;
 import premium.model.entity.system.SysUser;
 
 import premium.model.vo.system.LoginVo;
@@ -16,6 +19,7 @@ import premium.manager.mapper.SysUserMapper;
 import premium.manager.service.SysUserService;
 import premium.model.vo.common.ResultCodeEnum;
 
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -88,6 +92,49 @@ public class SysUserServiceImpl implements SysUserService {
     @Override
     public void logout(String token) {
         redisTemplate.delete("user:login" + token);
+    }
+
+    @Override
+    public PageInfo<SysUser> findByPage(Integer pageNum, Integer pageSize, SysUserDto sysUserDto) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<SysUser> list = sysUserMapper.findByPage(sysUserDto);
+        return new PageInfo<>(list);
+    }
+
+    @Override
+    public void saveSysUser(SysUser sysUser) {
+        // 判断用户名不能重复
+        String userName = sysUser.getUserName();
+        SysUser dbUserName = sysUserMapper.selectByUserInfoName(userName);
+        if (dbUserName != null) {
+            throw new MyException(ResultCodeEnum.USER_NAME_IS_EXISTS);
+        }
+
+        // 输入密码进行加密
+        String md5_password = DigestUtils.md5DigestAsHex(sysUser.getPassword().getBytes());
+        sysUser.setPassword(md5_password);
+
+        // 设置status值    1-用户可用  0-用户不可用
+        sysUser.setStatus(1);
+
+        sysUserMapper.save(sysUser);
+    }
+
+    @Override
+    public void updateSysUser(SysUser sysUser) {
+        // 判断用户名不能重复
+        String userName = sysUser.getUserName();
+        SysUser dbUserName = sysUserMapper.selectByUserInfoName(userName);
+        if (dbUserName != null && !dbUserName.getId().equals(sysUser.getId())) {
+            throw new MyException(ResultCodeEnum.USER_NAME_IS_EXISTS);
+        }
+
+        sysUserMapper.update(sysUser);
+    }
+
+    @Override
+    public void deleteById(Long userId) {
+        sysUserMapper.deleteById(userId);
     }
 
 }

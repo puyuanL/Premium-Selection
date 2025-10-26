@@ -23,4 +23,33 @@
             order by id desc
     </select>
 
+    <!--  Role Add method  -->
+    <insert id="save">
+        insert into sys_role
+            (id, role_name, role_code, description)
+            VALUES
+            (#{id}, #{roleName}, #{roleCode}, #{description})
+    </insert>
+
+    <!--  Role Update method  -->
+    <update id="update">
+        update sys_role set
+        <if test="roleName != null and roleName != ''">
+            role_name = #{roleName},
+        </if>
+        <if test="roleCode != null and roleCode != ''">
+            role_code = #{roleCode},
+        </if>
+        <if test="description != null and description != ''">
+            description = #{description},
+        </if>
+        update_time = now()
+        where
+        id = #{id}
+    </update>
+
+    <update id="delete">
+        update sys_role set is_deleted=1 where id=#{id}
+    </update>
+
 </mapper>

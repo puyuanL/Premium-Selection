@@ -12,7 +12,8 @@ public class GlobalExceptionHandler {
     // Global Exception Process
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
-    public Result error() {
+    public Result error(Exception e) {
+//        e.printStackTrace();
         return Result.build(null, ResultCodeEnum.SYSTEM_ERROR);
     }
 
