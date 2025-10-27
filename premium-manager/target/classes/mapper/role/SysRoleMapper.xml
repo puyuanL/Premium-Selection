@@ -5,14 +5,9 @@
     <!--  映射查询到的字段 -->
     <resultMap id="sysRoleMap" type="premium.model.entity.system.SysRole" autoMapping="true"/>
 
-    <!-- 用于select查询公用抽取的列 -->
-    <sql id="columns">
-        id,role_name,role_code,description,create_time,update_time,is_deleted
-    </sql>
-
     <!--  Role list method  -->
     <select id="findByPage" resultMap="sysRoleMap">
-        select <include refid="columns"/>
+        select id,role_name,role_code,description,create_time,update_time,is_deleted
             from sys_role
             <where>
                 <if test="roleName != null and roleName != ''">
@@ -48,8 +43,15 @@
         id = #{id}
     </update>
 
+    <!--  delete sys role  -->
     <update id="delete">
         update sys_role set is_deleted=1 where id=#{id}
     </update>
+
+    <!--  find all sys roles  -->
+    <select id="findAll" resultMap="sysRoleMap">
+        select id, role_name, role_code, description, create_time, update_time, is_deleted
+            from sys_role where is_deleted = 0
+    </select>
 
 </mapper>

@@ -1,6 +1,7 @@
 package premium.manager.service;
 
 import com.github.pagehelper.PageInfo;
+import premium.model.dto.system.AssginRoleDto;
 import premium.model.dto.system.LoginDto;
 import premium.model.dto.system.SysUserDto;
 import premium.model.entity.system.SysUser;
@@ -21,4 +22,6 @@ public interface SysUserService {
     void updateSysUser(SysUser sysUser);
 
     void deleteById(Long userId);
+
+    void doAssign(AssginRoleDto assginRoleDto);
 }

@@ -24,3 +24,8 @@ premium:
     noAuthUrls:
       - "/admin/system/index/login"
       - "/admin/system/index/generateValidateCode"
+  minio:
+    endpointUrl: http://172.18.91.89:9001
+    accessKey: root
+    secreteKey: lpy123456
+    bucketName: premium-bucket

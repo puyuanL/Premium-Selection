@@ -6,6 +6,8 @@ import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import premium.common.exception.MyException;
+import premium.manager.mapper.SysRoleUserMapper;
+import premium.model.dto.system.AssginRoleDto;
 import premium.model.dto.system.LoginDto;
 import premium.model.dto.system.SysUserDto;
 import premium.model.entity.system.SysUser;
@@ -29,6 +31,9 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Autowired
     private SysUserMapper sysUserMapper;
+
+    @Autowired
+    private SysRoleUserMapper sysRoleUserMapper;
 
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
@@ -135,6 +140,18 @@ public class SysUserServiceImpl implements SysUserService {
     @Override
     public void deleteById(Long userId) {
         sysUserMapper.deleteById(userId);
+    }
+
+    @Override
+    public void doAssign(AssginRoleDto assginRoleDto) {
+        // delete all roles of userId
+        sysRoleUserMapper.deleteRoleByUserId(assginRoleDto.getUserId());
+        // add new roles of userId
+        List<Long> roleIdList = assginRoleDto.getRoleIdList();
+        for (Long roleId : roleIdList) {
+            sysRoleUserMapper.doAssign(assginRoleDto.getUserId(), roleId);
+        }
+
     }
 
 }
