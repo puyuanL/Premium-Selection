@@ -12,6 +12,7 @@
             from sys_user
             where username=#{userName} and is_deleted=0
     </select>
+
     <!--  用户条件分页查询接口  -->
     <select id="findByPage" resultType="premium.model.entity.system.SysUser">
         select <include refid="columns"/> from sys_user
