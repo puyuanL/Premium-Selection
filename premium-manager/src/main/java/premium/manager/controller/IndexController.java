@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.apache.poi.ss.formula.functions.T;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
+import premium.manager.service.SysMenuService;
 import premium.manager.service.ValidateCodeService;
 import premium.model.dto.system.LoginDto;
 import premium.model.entity.system.SysUser;
@@ -15,8 +16,11 @@ import premium.model.vo.common.ResultCodeEnum;
 import premium.model.vo.system.LoginVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import premium.manager.service.SysUserService;
+import premium.model.vo.system.SysMenuVo;
 import premium.model.vo.system.ValidateCodeVo;
 import premium.utils.AuthContextUtil;
+
+import java.util.List;
 
 @Tag(name = "用户接口")
 @RestController
@@ -28,6 +32,9 @@ public class IndexController {
 
     @Autowired
     private ValidateCodeService validateCodeService;
+
+    @Autowired
+    private SysMenuService sysMenuService;
 
     @Autowired
     private RedisTemplate<Object, Object> redisTemplate;
@@ -72,12 +79,21 @@ public class IndexController {
 //    }
 
     /**
-     *
+     * logout
      */
     @GetMapping("/logout")
     public Result logout(@RequestHeader(name = "token") String token) {
         sysUserService.logout(token);
         return Result.build(null, ResultCodeEnum.SUCCESS);
+    }
+
+    /**
+     * 查询用户可以操作的菜单
+     */
+    @GetMapping("/menus")
+    public Result menus() {
+        List<SysMenuVo> list = sysMenuService.findMenusByUserId();
+        return Result.build(list, ResultCodeEnum.SUCCESS);
     }
 
 }

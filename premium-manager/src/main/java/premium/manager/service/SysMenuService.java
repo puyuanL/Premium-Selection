@@ -1,6 +1,7 @@
 package premium.manager.service;
 
 import premium.model.entity.system.SysMenu;
+import premium.model.vo.system.SysMenuVo;
 
 import java.util.List;
 
@@ -12,4 +13,6 @@ public interface SysMenuService {
     void update(SysMenu sysMenu);
 
     void removeById(Long id);
+
+    List<SysMenuVo> findMenusByUserId();
 }
