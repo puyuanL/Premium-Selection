@@ -1,10 +1,9 @@
 package premium.manager.controller;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import premium.manager.service.CategoryService;
 import premium.model.entity.product.Category;
 import premium.model.vo.common.Result;
@@ -26,5 +25,22 @@ public class CategoryController {
     public Result findCategoryList(@PathVariable int id) {
         List<Category> categoryList = categoryService.findcategoryList(id);
         return Result.build(categoryList, ResultCodeEnum.SUCCESS);
+    }
+
+    /**
+     * Excel Category 导出: 文件导出 + 文件下载
+     */
+    @GetMapping("/exportData")
+    public void exportData(HttpServletResponse response) {
+        categoryService.exportData(response);
+    }
+
+    /**
+     * Excel Category 导入
+     */
+    @PostMapping("/importData")
+    public Result importMapping(@RequestParam("file") MultipartFile file) {
+        categoryService.importData(file);
+        return Result.build(null, ResultCodeEnum.SUCCESS);
     }
 }
