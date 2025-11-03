@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="premium.manager.mapper.CategoryBrandMapper">
+
+    <insert id="save">
+        insert into category_brand (brand_id, category_id, create_time, update_time, is_deleted)
+        VALUES (#{brandId}, #{categoryId}, now(), now(), 0)
+    </insert>
+
+    <update id="updateById">
+        update category_brand
+        set
+            <if test="brandId != null and brandId != ''">
+                brand_id = #{brandId},
+            </if>
+            <if test="categoryId != null and categoryId != ''">
+                category_id = #{categoryId},
+            </if>
+                update_time=now()
+        where id=#{id}
+    </update>
+
+    <delete id="deleteById">
+        delete from category_brand where id=#{id}
+    </delete>
+
+    <select id="findByPage" resultType="premium.model.entity.product.CategoryBrand">
+        select cb.*,
+               c.name AS categoryName,
+               b.name AS BrandName, b.logo
+        from brand b
+            INNER JOIN category_brand cb ON b.id = cb.brand_id
+            INNER JOIN category c ON c.id = cb.category_id
+        <where>
+            <if test="brandId != null and brandId != ''">
+                and cb.brand_id=#{brandId}
+            </if>
+            <if test="categoryId != null and categoryId != ''">
+                and cb.category_id=#{categoryId}
+            </if>
+        and cb.is_deleted=0
+        </where>
+        order by cb.id desc
+    </select>
+</mapper>

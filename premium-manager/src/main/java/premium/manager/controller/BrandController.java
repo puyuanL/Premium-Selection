@@ -8,6 +8,8 @@ import premium.model.entity.product.Brand;
 import premium.model.vo.common.Result;
 import premium.model.vo.common.ResultCodeEnum;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/admin/product/brand")
 public class BrandController {
@@ -49,5 +51,14 @@ public class BrandController {
     public Result deleteById(@PathVariable Long id) {
         brandService.deleteById(id);
         return Result.build(null, ResultCodeEnum.SUCCESS);
+    }
+
+    /**
+     *
+     */
+    @GetMapping("/findAll")
+    public Result findAll() {
+        List<Brand> list = brandService.findAll();
+        return Result.build(list, ResultCodeEnum.SUCCESS);
     }
 }
