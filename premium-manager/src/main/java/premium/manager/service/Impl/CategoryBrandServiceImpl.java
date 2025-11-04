@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import premium.manager.mapper.CategoryBrandMapper;
 import premium.manager.service.CategoryBrandService;
 import premium.model.dto.product.CategoryBrandDto;
+import premium.model.entity.product.Brand;
 import premium.model.entity.product.CategoryBrand;
 
 import java.util.List;
@@ -37,5 +38,10 @@ public class CategoryBrandServiceImpl implements CategoryBrandService {
     @Override
     public void deleteById(Long id) {
         categoryBrandMapper.deleteById(id);
+    }
+
+    @Override
+    public List<Brand> findBrandByCategoryId(Long categoryId) {
+        return categoryBrandMapper.findByCategoryId(categoryId);
     }
 }

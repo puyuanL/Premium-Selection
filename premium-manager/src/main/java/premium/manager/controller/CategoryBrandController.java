@@ -1,11 +1,11 @@
 package premium.manager.controller;
 
-import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import premium.manager.service.CategoryBrandService;
 import premium.model.dto.product.CategoryBrandDto;
+import premium.model.entity.product.Brand;
 import premium.model.entity.product.CategoryBrand;
 import premium.model.vo.common.Result;
 import premium.model.vo.common.ResultCodeEnum;
@@ -55,6 +55,15 @@ public class CategoryBrandController {
     public Result deleteById(@PathVariable Long id) {
         categoryBrandService.deleteById(id);
         return Result.build(null, ResultCodeEnum.SUCCESS);
+    }
+
+    /**
+     * 根据分类id查询对应的品牌数据
+     */
+    @GetMapping("/findBrandByCategoryId/{categoryId}")
+    public Result findBrandByCategoryId(@PathVariable Long categoryId) {
+        List<Brand> list = categoryBrandService.findBrandByCategoryId(categoryId);
+        return Result.build(list, ResultCodeEnum.SUCCESS);
     }
 
 }

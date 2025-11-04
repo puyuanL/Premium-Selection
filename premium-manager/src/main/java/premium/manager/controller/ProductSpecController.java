@@ -1,0 +1,65 @@
+package premium.manager.controller;
+
+import com.github.pagehelper.PageInfo;
+import org.apache.logging.log4j.message.ReusableMessage;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import premium.manager.service.ProductSpecService;
+import premium.model.entity.product.ProductSpec;
+import premium.model.vo.common.Result;
+import premium.model.vo.common.ResultCodeEnum;
+
+import java.util.List;
+
+@RestController
+@RequestMapping(value = "/admin/product/productSpec")
+public class ProductSpecController {
+
+    @Autowired
+    private ProductSpecService productSpecService;
+
+    /**
+     * 商品列表
+     */
+    @GetMapping("/{page}/{limit}")
+    public Result<PageInfo<ProductSpec>> findByPage(@PathVariable Integer page, @PathVariable Integer limit) {
+        PageInfo<ProductSpec> pageInfo = productSpecService.findByPage(page, limit);
+        return Result.build(pageInfo, ResultCodeEnum.SUCCESS);
+    }
+
+    /**
+     * 商品添加
+     */
+    @PostMapping("/save")
+    public Result save(@RequestBody ProductSpec productSpec) {
+        productSpecService.save(productSpec);
+        return Result.build(null, ResultCodeEnum.SUCCESS);
+    }
+
+    /**
+     * 商品修改
+     */
+    @PutMapping("/updateById")
+    public Result updateById(@RequestBody ProductSpec productSpec) {
+        productSpecService.updateById(productSpec);
+        return Result.build(null, ResultCodeEnum.SUCCESS);
+    }
+
+    /**
+     * 商品删除
+     */
+    @DeleteMapping("/deleteById/{id}")
+    public Result deleteById(@PathVariable Long id) {
+        productSpecService.deleteById(id);
+        return Result.build(null, ResultCodeEnum.SUCCESS);
+    }
+
+    /**
+     * 加载商品规格数据
+     */
+    @GetMapping("findAll")
+    public Result findAll() {
+        List<ProductSpec> list = productSpecService.findAll();
+        return Result.build(list , ResultCodeEnum.SUCCESS) ;
+    }
+}

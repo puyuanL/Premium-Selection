@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="premium.manager.mapper.ProductDetailsMapper">
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+        insert into product_details (
+            id,
+            product_id,
+            image_urls,
+            create_time,update_time,is_deleted
+        ) values (
+                     #{id},
+                     #{productId},
+                     #{imageUrls},
+                     now(), now(), 0
+                 )
+    </insert>
+
+    <update id="updateById">
+        update product_details set
+        <if test="product_id != null and product_id != ''">
+            product_id=#{productId},
+        </if>
+        <if test="image_urls != null and image_urls != ''">
+            image_urls=#{imageUrls},
+        </if>
+        update_time=now()
+        where id=#{id}
+    </update>
+
+    <update id="deleteById">
+        update product
+        set is_deleted=1 and update_time=now()
+        where id=#{id}
+    </update>
+
+    <delete id="deleteByProductId">
+        update product_details
+        set update_time=now(), is_deleted=1
+        where product_id=#{id}
+    </delete>
+
+    <select id="findDetailsById" resultType="premium.model.entity.product.ProductDetails">
+        select id, product_id, image_urls, create_time, update_time, is_deleted
+        from product_details
+        where product_id=#{id} and is_deleted=0
+    </select>
+
+</mapper>

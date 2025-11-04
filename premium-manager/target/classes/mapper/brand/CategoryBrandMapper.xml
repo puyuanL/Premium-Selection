@@ -21,9 +21,11 @@
         where id=#{id}
     </update>
 
-    <delete id="deleteById">
-        delete from category_brand where id=#{id}
-    </delete>
+    <update id="deleteById">
+        update category_brand
+        set update_time = now(), is_deleted = 1
+        where id=#{id}
+    </update>
 
     <select id="findByPage" resultType="premium.model.entity.product.CategoryBrand">
         select cb.*,
@@ -42,5 +44,12 @@
         and cb.is_deleted=0
         </where>
         order by cb.id desc
+    </select>
+
+    <select id="findByCategoryId" resultType="premium.model.entity.product.Brand">
+        select b.*
+        from category_brand cb
+        INNER JOIN brand b ON cb.brand_id = b.id
+        where cb.category_id=#{categoryId} and b.is_deleted=0
     </select>
 </mapper>
