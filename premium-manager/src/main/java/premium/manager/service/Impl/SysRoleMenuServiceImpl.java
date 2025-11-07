@@ -2,6 +2,7 @@ package premium.manager.service.Impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import premium.manager.mapper.SysRoleMenuMapper;
 import premium.manager.service.SysMenuService;
 import premium.manager.service.SysRoleMenuService;
@@ -35,6 +36,7 @@ public class SysRoleMenuServiceImpl implements SysRoleMenuService {
         return result;
     }
 
+    @Transactional
     @Override
     public void doAssign(AssignMenuDto assignMenuDto) {
         // 删除角色之前分配过的菜单数据

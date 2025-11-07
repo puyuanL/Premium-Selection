@@ -3,6 +3,7 @@ package premium.manager.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import premium.common.log.annotation.Log;
 import premium.manager.service.SysMenuService;
 import premium.model.entity.system.SysMenu;
 import premium.model.vo.common.Result;
@@ -29,6 +30,7 @@ public class SysMenuController {
     /**
      * 菜单添加
      */
+    @Log(title = "菜单管理-添加", businessType = 1)
     @PostMapping("/save")
     public Result save(@RequestBody SysMenu sysMenu) {
         sysMenuService.save(sysMenu);
@@ -38,6 +40,7 @@ public class SysMenuController {
     /**
      * 菜单修改
      */
+    @Log(title = "菜单管理-修改", businessType = 2)
     @PutMapping("/update")
     public Result update(@RequestBody SysMenu sysMenu) {
         sysMenuService.update(sysMenu);
@@ -47,6 +50,7 @@ public class SysMenuController {
     /**
      * 菜单删除
      */
+    @Log(title = "菜单管理-删除", businessType = 3)
     @DeleteMapping("/removeById/{id}")
     public Result removeById(@PathVariable("id") Long id) {
         sysMenuService.removeById(id);

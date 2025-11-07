@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import premium.manager.mapper.CategoryMapper;
 import premium.manager.mapper.ProductDetailsMapper;
 import premium.manager.mapper.ProductMapper;
@@ -35,6 +36,7 @@ public class ProductServiceImpl implements ProductService {
         return new PageInfo<>(list);
     }
 
+    @Transactional
     @Override
     public void save(Product product) {
         // 保存基本信息
@@ -77,6 +79,7 @@ public class ProductServiceImpl implements ProductService {
         return product;
     }
 
+    @Transactional
     @Override
     public void update(Product product) {
         // update product
@@ -93,6 +96,7 @@ public class ProductServiceImpl implements ProductService {
         productDetailsMapper.updateById(productDetails);
     }
 
+    @Transactional
     @Override
     public void deleteById(Long id) {
         productMapper.deleteById(id);

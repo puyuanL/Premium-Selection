@@ -5,7 +5,9 @@ import com.alibaba.fastjson.JSON;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.springframework.transaction.annotation.Transactional;
 import premium.common.exception.MyException;
+import premium.common.log.annotation.Log;
 import premium.manager.mapper.SysRoleUserMapper;
 import premium.model.dto.system.AssginRoleDto;
 import premium.model.dto.system.LoginDto;
@@ -142,6 +144,7 @@ public class SysUserServiceImpl implements SysUserService {
         sysUserMapper.deleteById(userId);
     }
 
+    @Transactional
     @Override
     public void doAssign(AssginRoleDto assginRoleDto) {
         // delete all roles of userId

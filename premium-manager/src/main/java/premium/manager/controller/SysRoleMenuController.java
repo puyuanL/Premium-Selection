@@ -2,6 +2,7 @@ package premium.manager.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import premium.common.log.annotation.Log;
 import premium.manager.service.SysRoleMenuService;
 import premium.model.dto.system.AssignMenuDto;
 import premium.model.vo.common.Result;
@@ -29,6 +30,7 @@ public class SysRoleMenuController {
     /**
      * 保存角色分配菜单数据
      */
+    @Log(title = "角色分配菜单", businessType = 0)
     @PostMapping("/doAssign")
     public Result doAssign(@RequestBody AssignMenuDto assignMenuDto) {
         sysRoleMenuService.doAssign(assignMenuDto);

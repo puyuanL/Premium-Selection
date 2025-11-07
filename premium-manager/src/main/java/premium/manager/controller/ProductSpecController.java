@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import org.apache.logging.log4j.message.ReusableMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import premium.common.log.annotation.Log;
 import premium.manager.service.ProductSpecService;
 import premium.model.entity.product.ProductSpec;
 import premium.model.vo.common.Result;
@@ -30,6 +31,7 @@ public class ProductSpecController {
     /**
      * 商品添加
      */
+    @Log(title = "商品详情管理-添加", businessType = 1)
     @PostMapping("/save")
     public Result save(@RequestBody ProductSpec productSpec) {
         productSpecService.save(productSpec);
@@ -39,6 +41,7 @@ public class ProductSpecController {
     /**
      * 商品修改
      */
+    @Log(title = "商品详情管理-修改", businessType = 2)
     @PutMapping("/updateById")
     public Result updateById(@RequestBody ProductSpec productSpec) {
         productSpecService.updateById(productSpec);
@@ -48,6 +51,7 @@ public class ProductSpecController {
     /**
      * 商品删除
      */
+    @Log(title = "商品详情管理-删除", businessType = 3)
     @DeleteMapping("/deleteById/{id}")
     public Result deleteById(@PathVariable Long id) {
         productSpecService.deleteById(id);

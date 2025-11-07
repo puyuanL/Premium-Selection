@@ -3,6 +3,7 @@ package premium.manager.controller;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import premium.common.log.annotation.Log;
 import premium.manager.service.SysUserService;
 import premium.model.dto.system.SysUserDto;
 import premium.model.entity.system.SysUser;
@@ -30,6 +31,7 @@ public class SysUserController {
     /**
      * 用户添加
      */
+    @Log(title = "用户管理-添加", businessType = 1)
     @PostMapping(value = "/saveSysUser")
     public Result saveSysUser(@RequestBody SysUser sysUser) {
         sysUserService.saveSysUser(sysUser);
@@ -39,6 +41,7 @@ public class SysUserController {
     /**
      * 用户修改
      */
+    @Log(title = "用户管理-修改", businessType = 2)
     @PutMapping(value = "/updateSysUser")
     public Result updateSysUser(@RequestBody SysUser sysUser) {
         sysUserService.updateSysUser(sysUser);
@@ -48,6 +51,7 @@ public class SysUserController {
     /**
      * 用户删除
      */
+    @Log(title = "用户管理-删除", businessType = 3)
     @DeleteMapping(value = "/deleteById/{userId}")
     public Result deleteById(@PathVariable(value = "userId") Long userId) {
         sysUserService.deleteById(userId);

@@ -3,6 +3,8 @@ package premium.manager.controller;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import premium.common.log.annotation.Log;
+import premium.common.log.enums.OperatorType;
 import premium.manager.service.BrandService;
 import premium.model.entity.product.Brand;
 import premium.model.vo.common.Result;
@@ -29,6 +31,7 @@ public class BrandController {
     /**
      * 品牌添加
      */
+    @Log(title = "品牌管理-添加", businessType = 1)
     @PostMapping("/save")
     public Result save(@RequestBody Brand brand) {
         brandService.save(brand);
@@ -38,6 +41,7 @@ public class BrandController {
     /**
      * 品牌修改
      */
+    @Log(title = "品牌管理-修改", businessType = 2)
     @PutMapping("/updateById")
     public Result updateById(@RequestBody Brand brand) {
         brandService.updateById(brand);
@@ -47,6 +51,7 @@ public class BrandController {
     /**
      * 品牌删除
      */
+    @Log(title = "品牌管理-删除", businessType = 3)
     @DeleteMapping("/deleteById/{id}")
     public Result deleteById(@PathVariable Long id) {
         brandService.deleteById(id);
@@ -54,7 +59,7 @@ public class BrandController {
     }
 
     /**
-     *
+     * 所有品牌
      */
     @GetMapping("/findAll")
     public Result findAll() {

@@ -2,6 +2,7 @@ package premium.manager.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import premium.common.log.annotation.Log;
 import premium.manager.service.SysRoleService;
 import premium.manager.service.SysUserService;
 import premium.model.dto.system.AssginRoleDto;
@@ -34,6 +35,7 @@ public class SysRoleUserController {
     /**
      * 为用户分配角色, 保存分配的数据
      */
+    @Log(title = "用户分配角色", businessType = 0)
     @PostMapping(value = "/doAssign")
     public Result doAssign(@RequestBody AssginRoleDto assginRoleDto) {
         sysUserService.doAssign(assginRoleDto);

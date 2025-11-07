@@ -3,6 +3,7 @@ package premium.manager.controller;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import premium.common.log.annotation.Log;
 import premium.manager.service.ProductService;
 import premium.model.dto.product.ProductDto;
 import premium.model.entity.product.Product;
@@ -30,6 +31,7 @@ public class ProductController {
     /**
      * 商品添加
      */
+    @Log(title = "商品管理-添加", businessType = 1)
     @PostMapping("/save")
     public Result save(@RequestBody Product product) {
         productService.save(product);
@@ -48,6 +50,7 @@ public class ProductController {
     /**
      * 保存修改的数据
      */
+    @Log(title = "商品管理-修改", businessType = 2)
     @PutMapping("/updateById")
     public Result update(@RequestBody Product product) {
         productService.update(product);
@@ -57,6 +60,7 @@ public class ProductController {
     /**
      * 商品删除
      */
+    @Log(title = "商品管理-删除", businessType = 3)
     @DeleteMapping("/deleteById/{id}")
     public Result deleteById(@PathVariable Long id) {
         productService.deleteById(id);
@@ -66,6 +70,7 @@ public class ProductController {
     /**
      * 商品审核
      */
+    @Log(title = "商品管理-审核", businessType = 0)
     @GetMapping("/updateAuditStatus/{id}/{auditStatus}")
     public Result updateAuditStatus(@PathVariable Long id, @PathVariable Integer auditStatus) {
         productService.updateAuditStatus(id, auditStatus);
@@ -75,6 +80,7 @@ public class ProductController {
     /**
      * 商品上下架
      */
+    @Log(title = "商品管理-上下架", businessType = 0)
     @GetMapping("/updateStatus/{id}/{status}")
     public Result updateStatus(@PathVariable Long id, @PathVariable Integer status) {
         productService.updateStatus(id, status);

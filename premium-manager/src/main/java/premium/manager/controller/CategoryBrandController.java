@@ -3,6 +3,7 @@ package premium.manager.controller;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import premium.common.log.annotation.Log;
 import premium.manager.service.CategoryBrandService;
 import premium.model.dto.product.CategoryBrandDto;
 import premium.model.entity.product.Brand;
@@ -33,6 +34,7 @@ public class CategoryBrandController {
     /**
      * 分类品牌管理 保存功能
      */
+    @Log(title = "品牌分类管理-添加", businessType = 1)
     @PostMapping("/save")
     public Result save(@RequestBody CategoryBrandDto categoryBrandDto) {
         categoryBrandService.save(categoryBrandDto);
@@ -42,6 +44,7 @@ public class CategoryBrandController {
     /**
      * 分类品牌管理 修改
      */
+    @Log(title = "品牌分类管理-添加", businessType = 2)
     @PutMapping("/updateById")
     public Result updateById(@RequestBody CategoryBrand categoryBrand) {
         categoryBrandService.updateById(categoryBrand);
@@ -51,6 +54,7 @@ public class CategoryBrandController {
     /**
      * 分类品牌管理 删除
      */
+    @Log(title = "品牌分类管理-添加", businessType = 3)
     @DeleteMapping("/deleteById/{id}")
     public Result deleteById(@PathVariable Long id) {
         categoryBrandService.deleteById(id);

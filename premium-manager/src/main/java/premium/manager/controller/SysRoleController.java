@@ -3,6 +3,7 @@ package premium.manager.controller;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import premium.common.log.annotation.Log;
 import premium.manager.service.SysRoleService;
 import premium.model.dto.system.SysRoleDto;
 import premium.model.entity.system.SysRole;
@@ -32,6 +33,7 @@ public class SysRoleController {
     /**
      * Role Add method
      */
+    @Log(title = "角色管理-添加", businessType = 1)
     @PostMapping("/saveSysRole")
     public Result saveSysRole(@RequestBody SysRole sysRole) {
         sysRoleService.saveSysRole(sysRole);
@@ -41,6 +43,7 @@ public class SysRoleController {
     /**
      * Role Edit method
      */
+    @Log(title = "角色管理-修改", businessType = 2)
     @PutMapping("/updateSysRole")
     public Result updateSysRole(@RequestBody SysRole sysRole) {
         sysRoleService.updateSysRole(sysRole);
@@ -50,6 +53,7 @@ public class SysRoleController {
     /**
      * Role Delete method
      */
+    @Log(title = "角色管理-删除", businessType = 3)
     @DeleteMapping("/deleteById/{roleId}")
     public Result deleteById(@PathVariable Long roleId) {
         sysRoleService.deleteById(roleId);

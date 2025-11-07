@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import premium.common.log.annotation.Log;
 import premium.manager.service.CategoryService;
 import premium.model.entity.product.Category;
 import premium.model.vo.common.Result;
@@ -30,6 +31,7 @@ public class CategoryController {
     /**
      * Excel Category 导出: 文件导出 + 文件下载
      */
+    @Log(title = "分类管理-导出", businessType = 0)
     @GetMapping("/exportData")
     public void exportData(HttpServletResponse response) {
         categoryService.exportData(response);
@@ -38,6 +40,7 @@ public class CategoryController {
     /**
      * Excel Category 导入
      */
+    @Log(title = "分类管理-导入", businessType = 0)
     @PostMapping("/importData")
     public Result importMapping(@RequestParam("file") MultipartFile file) {
         categoryService.importData(file);
