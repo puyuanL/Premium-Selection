@@ -9,11 +9,20 @@
         <outputRelativeToContentRoot value="true" />
         <module name="premium-manager" />
         <module name="common-util" />
-        <module name="common-log" />
+        <module name="service-product-client" />
         <module name="common-service" />
+        <module name="premium-server-gateway" />
+        <module name="service-product" />
+        <module name="service-user" />
+        <module name="service-user-client" />
+        <module name="common-log" />
+        <module name="service-order" />
         <module name="premium-model" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="premium-service11" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
@@ -22,6 +31,15 @@
       <module name="common-util" options="-parameters" />
       <module name="premium-manager" options="-parameters" />
       <module name="premium-model" options="-parameters" />
+      <module name="premium-server-gateway" options="-parameters" />
+      <module name="premium-service" options="" />
+      <module name="premium-service-client" options="" />
+      <module name="premium-service11" options="" />
+      <module name="service-order" options="-parameters" />
+      <module name="service-product" options="-parameters" />
+      <module name="service-product-client" options="-parameters" />
+      <module name="service-user" options="-parameters" />
+      <module name="service-user-client" options="-parameters" />
     </option>
   </component>
 </project>
