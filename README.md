@@ -1,9 +1,6 @@
 # Premium-Selection
 A Java project which allow people to select products on web
 
-
-
-
 ## 管理端
 
 管理端前端：  http://localhost:3001/

@@ -41,7 +41,7 @@ public class ProductSpecController {
     /**
      * 商品修改
      */
-    @Log(title = "商品详情管理-修改", businessType = 2)
+//    @Log(title = "商品详情管理-修改", businessType = 2)
     @PutMapping("/updateById")
     public Result updateById(@RequestBody ProductSpec productSpec) {
         productSpecService.updateById(productSpec);

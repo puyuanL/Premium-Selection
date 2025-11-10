@@ -45,7 +45,6 @@ public class IndexController {
      * @param loginDto LoginDto
      * @return Result with code number
      */
-    @Log(title = "登录", businessType = 0)
     @PostMapping("login")
     public Result login(@RequestBody LoginDto loginDto) {
         LoginVo loginVo = sysUserService.login(loginDto);
@@ -82,7 +81,6 @@ public class IndexController {
     /**
      * logout
      */
-    @Log(title = "登出", businessType = 0)
     @GetMapping("/logout")
     public Result logout(@RequestHeader(name = "token") String token) {
         sysUserService.logout(token);

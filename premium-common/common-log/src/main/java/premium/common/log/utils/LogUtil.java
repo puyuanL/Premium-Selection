@@ -53,7 +53,11 @@ public class LogUtil {
         if(sysLog.isSaveRequestData()) {
             String requestMethod = sysOperLog.getRequestMethod();
             if (HttpMethod.PUT.name().equals(requestMethod) || HttpMethod.POST.name().equals(requestMethod)) {
+                int maxLength = 1900;
                 String params = Arrays.toString(joinPoint.getArgs());
+                if (params.length() > maxLength) {
+                    params = params.substring(0, maxLength) + "...[参数过长，已截断]";
+                }
                 sysOperLog.setOperParam(params);
             }
         }

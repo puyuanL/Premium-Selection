@@ -19,7 +19,7 @@ public class LogAspect {
 
     // 环绕通知
     @Around(value = "@annotation(sysLog)")
-    public Object doAroundAdvice(ProceedingJoinPoint joinPoint, Log sysLog) {
+    public Object doAroundAdvice(ProceedingJoinPoint joinPoint, Log sysLog) throws Throwable{
 
         // 封装数据
         SysOperLog sysOperLog = new SysOperLog();
@@ -33,7 +33,7 @@ public class LogAspect {
         } catch (Throwable e) {
             e.printStackTrace();
             LogUtil.afterHandleLog(sysLog, proceed, sysOperLog, 1, e.getMessage());
-            throw new RuntimeException(e);
+            throw e;
         }
 
         // 调用service方法把日志信息添加数据库
