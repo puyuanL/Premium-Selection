@@ -15,7 +15,6 @@ import premium.product.service.ProductService;
 @Tag(name = "首页接口管理")
 @RestController
 @RequestMapping("/api/product/index")
-@CrossOrigin    // 跨域
 public class IndexController {
 
     @Autowired

@@ -28,4 +28,4 @@ MySQL Account:  root  | Password:   lpy123
 
 客户端前端：  http://172.18.91.89:80/
 
-
+Nacos管理页：http://172.18.91.89:8848/nacos
