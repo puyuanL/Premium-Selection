@@ -1,11 +1,9 @@
 package premium.product.service.Impl;
 
-import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import premium.model.entity.product.Category;
 import premium.product.mapper.CategoryMapper;
 import premium.product.service.CategoryService;
@@ -14,7 +12,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {

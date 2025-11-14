@@ -6,7 +6,7 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: localhost:8848
+        server-addr: 172.18.91.89:8848
     gateway:
       discovery:
         locator:
@@ -26,3 +26,7 @@ spring:
           uri: lb://service-product
           predicates:
             - Path=/*/product/**
+        - id: service-user
+          uri: lb://service-user
+          predicates:
+            - Path=/*/user/**

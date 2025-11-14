@@ -1,9 +1,9 @@
 server:
-  port: 8511
+  port: 8512
 
 spring:
   application:
-    name: service-product
+    name: service-user
   cloud:
     nacos:
       discovery:
