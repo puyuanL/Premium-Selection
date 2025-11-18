@@ -39,4 +39,12 @@ public class ProductController {
         ProductItemVo productItemVo = productService.item(skuId);
         return Result.build(productItemVo, ResultCodeEnum.SUCCESS);
     }
+
+    /**
+     * 远程调用，根据skuId返回sku信息
+     */
+    @GetMapping("/getBySkuId/{skuId}")
+    public ProductSku getBuSkuId(@PathVariable Long skuId) {
+        return productService.getBySkuId(skuId);
+    }
 }

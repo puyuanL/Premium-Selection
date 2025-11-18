@@ -78,4 +78,9 @@ public class ProductServiceImpl implements ProductService {
 
         return productItemVo;
     }
+
+    @Override
+    public ProductSku getBySkuId(Long skuId) {
+        return productSkuMapper.getBySkuId(skuId);
+    }
 }

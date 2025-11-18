@@ -14,6 +14,7 @@
         <module name="premium-server-gateway" />
         <module name="service-product" />
         <module name="service-user" />
+        <module name="service-cart" />
         <module name="service-user-client" />
         <module name="common-log" />
         <module name="service-order" />
@@ -35,6 +36,7 @@
       <module name="premium-service" options="" />
       <module name="premium-service-client" options="" />
       <module name="premium-service11" options="" />
+      <module name="service-cart" options="-parameters" />
       <module name="service-order" options="-parameters" />
       <module name="service-product" options="-parameters" />
       <module name="service-product-client" options="-parameters" />
