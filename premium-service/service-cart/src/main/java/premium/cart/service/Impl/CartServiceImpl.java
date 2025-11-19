@@ -120,4 +120,17 @@ public class CartServiceImpl implements CartService {
         String cartKey = this.getCartKey(AuthContextUtil.getUserInfo().getId());
         redisTemplate.delete(cartKey);
     }
+
+    @Override
+    public List<CartInfo> getAllChecked() {
+        String cartKey = this.getCartKey(AuthContextUtil.getUserInfo().getId());
+        List<Object> objList = redisTemplate.opsForHash().values(cartKey);
+        if (!CollectionUtils.isEmpty(objList)) {
+            return objList.stream()
+                    .map(obj -> JSON.parseObject(obj.toString(), CartInfo.class))
+                    .filter(obj -> obj.getIsChecked() == 1)
+                    .toList();
+        }
+        return null;
+    }
 }

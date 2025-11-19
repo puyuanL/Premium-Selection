@@ -38,7 +38,7 @@ public class CartController {
     /**
      * 删除购物车商品
      */
-    @DeleteMapping("auth/deleteCart/{skuId}")
+    @DeleteMapping("/auth/deleteCart/{skuId}")
     public Result deleteCart(@PathVariable("skuId") Long skuId) {
         cartService.deleteCart(skuId);
         return Result.build(null, ResultCodeEnum.SUCCESS);
@@ -70,5 +70,13 @@ public class CartController {
     public Result clearCart(){
         cartService.clearCart();
         return Result.build(null, ResultCodeEnum.SUCCESS);
+    }
+
+    /**
+     * 远程调用 —— 订单结算
+     */
+    @GetMapping(value = "/auth/getAllChecked")
+    public List<CartInfo> getAllChecked() {
+        return cartService.getAllChecked();
     }
 }
