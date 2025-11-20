@@ -47,7 +47,7 @@ public class CartServiceImpl implements CartService {
         } else {
             cartInfo = new CartInfo();
             // Nacos + OpenFeign 远程调用实现，根据skuId获取商品sku信息
-            ProductSku productSku = productFeignClient.getBuSkuId(skuId);
+            ProductSku productSku = productFeignClient.getBySkuId(skuId);
 
             cartInfo.setCartPrice(productSku.getSalePrice());
             cartInfo.setSkuNum(skuNum);
@@ -132,5 +132,20 @@ public class CartServiceImpl implements CartService {
                     .toList();
         }
         return null;
+    }
+
+    @Override
+    public void deleteChecked() {
+        String cartKey = this.getCartKey(AuthContextUtil.getUserInfo().getId());
+        List<Object> objList = redisTemplate.opsForHash().values(cartKey);
+
+        objList.stream()
+                .map(obj -> JSON.parseObject(obj.toString(), CartInfo.class))
+                .filter(cartInfo -> cartInfo.getIsChecked() == 1)
+                .forEach(cartInfo ->
+                    redisTemplate.opsForHash().delete(
+                            cartKey, String.valueOf(cartInfo.getSkuId())
+                    )
+                );
     }
 }

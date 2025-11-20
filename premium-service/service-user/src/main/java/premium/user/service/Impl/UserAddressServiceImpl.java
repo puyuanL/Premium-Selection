@@ -21,4 +21,9 @@ public class UserAddressServiceImpl implements UserAddressService {
         return userAddressMapper.findUserAddressList(userId);
     }
 
+    @Override
+    public UserAddress getUserAddressById(Long addressId) {
+        return userAddressMapper.getUserAddressById(addressId);
+    }
+
 }

@@ -9,6 +9,6 @@ import premium.model.entity.product.ProductSku;
 public interface ProductFeignClient {
 
     @GetMapping("/api/product/getBySkuId/{skuId}")
-    ProductSku getBuSkuId(@PathVariable("skuId") Long skuId);
+    ProductSku getBySkuId(@PathVariable("skuId") Long skuId);
 
 }
