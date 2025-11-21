@@ -42,3 +42,12 @@ https://marketnext.console.aliyun.com/bizlist?trial=1
     AppSecret：YGYto9sIrHRBjDMqvxCsjE17JNTTAdso
     AppCode：177a6bea1bde42ab97fa24699b3f389c
 
+## 其他配置
+
+### 内网穿透
+
+    使用 ngrok 内网穿透服务
+    账号 lpylpy
+    隧道id： 185748454746
+    域名： http://lpypremium.free.idcfengye.com
+

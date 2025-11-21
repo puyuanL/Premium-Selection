@@ -27,6 +27,7 @@ import premium.utils.AuthContextUtil;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -183,5 +184,25 @@ public class OrderInfoServiceImpl implements OrderInfoService {
         });
 
         return new PageInfo<>(orderInfoList);
+    }
+
+    @Override
+    public OrderInfo getByOrderNo(String orderNo) {
+        OrderInfo orderInfo = orderInfoMapper.getByOrderNo(orderNo);
+        List<OrderItem> orderItemList = orderItemMapper.findByOrderId(orderInfo.getId());
+        orderInfo.setOrderItemList(orderItemList);
+        return orderInfo;
+    }
+
+    @Override
+    public void updateOrderStatus(String orderNo, Integer orderStatus) {
+        OrderInfo orderInfo = orderInfoMapper.getByOrderNo(orderNo);
+        orderInfo.setOrderStatus(orderStatus);
+        orderInfo.setPaymentTime(new Date());
+        orderInfo.setPayType(2); // alipay
+
+        // 更新订单状态
+        orderInfoMapper.updateById(orderInfo);
+        // ToDo 更新 order_log 表
     }
 }

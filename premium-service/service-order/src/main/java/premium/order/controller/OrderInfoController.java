@@ -64,4 +64,22 @@ public class OrderInfoController {
         PageInfo<OrderInfo> pageInfo = orderInfoService.findUserPage(page, limit, orderStatus);
         return Result.build(pageInfo, ResultCodeEnum.SUCCESS);
     }
+
+    /**
+     * 远程调用——根据订单编号获取订单信息
+     */
+    @GetMapping("/auth/getOrderInfoByOrderNo/{orderNo}")
+    public OrderInfo getOrderInfoByOrderNo(@PathVariable String orderNo) {
+        return orderInfoService.getByOrderNo(orderNo) ;
+    }
+
+    /**
+     * 更新订单支付状态
+     */
+    @GetMapping("/auth/updateOrderStatusPayed/{orderNo}/{orderStatus}")
+    public Result updateOrderStatus(@PathVariable(value = "orderNo") String orderNo ,
+                                    @PathVariable(value = "orderStatus") Integer orderStatus) {
+        orderInfoService.updateOrderStatus(orderNo, orderStatus);
+        return Result.build(null , ResultCodeEnum.SUCCESS) ;
+    }
 }

@@ -16,6 +16,7 @@
     <file url="file://$PROJECT_DIR$/premium-model/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/premium-server-gateway/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/premium-service-client/service-cart-client/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/premium-service-client/service-order-client/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/premium-service-client/service-product-client/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/premium-service-client/service-user-client/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/premium-service-client/src/main/java" charset="UTF-8" />

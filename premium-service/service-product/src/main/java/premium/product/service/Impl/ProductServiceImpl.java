@@ -6,7 +6,9 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import premium.model.dto.h5.ProductSkuDto;
+import premium.model.dto.product.SkuSaleDto;
 import premium.model.entity.product.Product;
 import premium.model.entity.product.ProductDetails;
 import premium.model.entity.product.ProductSku;
@@ -82,5 +84,16 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductSku getBySkuId(Long skuId) {
         return productSkuMapper.getBySkuId(skuId);
+    }
+
+    // Todo 解决库存超卖问题
+    @Override
+    public Boolean updateSkuSaleAndStockNum(List<SkuSaleDto> skuSaleDtoList) {
+        if (!CollectionUtils.isEmpty(skuSaleDtoList)) {
+            for (SkuSaleDto skuSaleDto : skuSaleDtoList) {
+                productSkuMapper.updateSkuSaleAndStockNum(skuSaleDto);
+            }
+        }
+        return true;
     }
 }
