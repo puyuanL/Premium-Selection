@@ -28,6 +28,11 @@ MySQL
     Account:    root  
     Password:   lpy123
 
+Harbor:
+
+    Account:    admin
+    Password:   Harbor12345    
+
 ## 客户端
 
 客户端前端：  http://172.18.91.89:80/

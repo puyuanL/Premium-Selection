@@ -28,6 +28,39 @@
                  )
     </insert>
 
+    <update id="updatePaymentInfo">
+        update payment_info set
+        <if test="userId != null and userId != ''">
+            user_id = #{userId},
+        </if>
+        <if test="orderNo != null and orderNo != ''">
+            order_no = #{orderNo},
+        </if>
+        <if test="payType != null">
+            pay_type = #{payType},
+        </if>
+        <if test="outTradeNo != null and outTradeNo != ''">
+            out_trade_no = #{outTradeNo},
+        </if>
+        <if test="amount != null and amount != ''">
+            amount = #{amount},
+        </if>
+        <if test="content != null and content != ''">
+            content = #{content},
+        </if>
+        <if test="paymentStatus != null">
+            payment_status = #{paymentStatus},
+        </if>
+        <if test="callbackTime != null">
+            callback_time = #{callbackTime},
+        </if>
+        <if test="callbackContent != null and callbackContent != ''">
+            callback_content = #{callbackContent},
+        </if>
+        update_time=now()
+        where id=#{id}
+    </update>
+
     <select id="getByOrderNo" resultType="premium.model.entity.pay.PaymentInfo">
         select *
         from payment_info

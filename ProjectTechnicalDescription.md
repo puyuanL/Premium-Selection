@@ -136,7 +136,19 @@
 
 
 
-## 三、项目优化
+## 三、项目部署
+
+1、在docker中安装mysql、redis、nacos
+
+2、更改配置文件application.yml，并将application-dev.yml中的内容在nacos创建配置
+
+3、使用Harbor创建镜像仓库，在docker中配置并部署服务
+
+
+
+
+
+## 四、项目优化
 
 1、防止库存超卖（锁方案）
 

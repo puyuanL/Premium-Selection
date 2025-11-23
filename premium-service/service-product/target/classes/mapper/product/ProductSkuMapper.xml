@@ -2,6 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="premium.product.mapper.ProductSkuMapper">
+    <update id="updateSkuSaleAndStockNum">
+        update product_sku
+        set
+            stock_num=stock_num-#{num},
+            sale_num=sale_num+#{num},
+            update_time=now()
+        where id=#{skuId} and is_deleted=0
+    </update>
 
     <select id="findProductSkuBySaleSale" resultType="premium.model.entity.product.ProductSku">
         select ps.*
