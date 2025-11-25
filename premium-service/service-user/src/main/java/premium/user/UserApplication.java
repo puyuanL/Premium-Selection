@@ -2,11 +2,11 @@ package premium.user;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import premium.common.annotation.EnableUserLoginAuthInterceptor;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"premium"})
+@EnableFeignClients
 @EnableUserLoginAuthInterceptor
 public class UserApplication {
 

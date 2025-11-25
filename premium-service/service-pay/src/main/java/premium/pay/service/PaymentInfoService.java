@@ -8,4 +8,6 @@ public interface PaymentInfoService {
     PaymentInfo savePaymentInfo(String orderNo);
 
     void updatePaymentStatus(Map<String, String> paramMap);
+
+    void updatePaymentStatusToSuccess(String orderNo);
 }

@@ -154,5 +154,14 @@
         from order_info
         where order_no=#{orderNo} and is_deleted=0
     </select>
+    <select id="selectTimeoutOrders" resultType="premium.model.entity.order.OrderInfo">
+        select *
+        from order_info
+        where
+            order_status=#{status} and
+            payment_time IS NULL and
+            #{timeoutTime} > create_time and
+            is_deleted=0
+    </select>
 
 </mapper>

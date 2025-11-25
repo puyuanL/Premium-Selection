@@ -31,7 +31,12 @@ MySQL
 Harbor:
 
     Account:    admin
-    Password:   Harbor12345    
+    Password:   Harbor12345
+
+RabbitMQ:
+
+    Account:    admin
+    Password:   lpy123
 
 ## 客户端
 

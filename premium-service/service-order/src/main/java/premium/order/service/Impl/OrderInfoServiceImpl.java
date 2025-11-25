@@ -5,6 +5,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import premium.common.exception.MyException;
 import premium.feign.cart.CartFeignClient;
 import premium.feign.product.ProductFeignClient;
@@ -14,6 +15,7 @@ import premium.model.entity.h5.CartInfo;
 import premium.model.entity.order.OrderInfo;
 import premium.model.entity.order.OrderItem;
 import premium.model.entity.order.OrderLog;
+import premium.model.entity.order.OrderStatus;
 import premium.model.entity.product.ProductSku;
 import premium.model.entity.user.UserAddress;
 import premium.model.entity.user.UserInfo;
@@ -23,6 +25,7 @@ import premium.order.mapper.OrderInfoMapper;
 import premium.order.mapper.OrderItemMapper;
 import premium.order.mapper.OrderLogMapper;
 import premium.order.service.OrderInfoService;
+import premium.stock.StockManager;
 import premium.utils.AuthContextUtil;
 
 import java.math.BigDecimal;
@@ -50,6 +53,9 @@ public class OrderInfoServiceImpl implements OrderInfoService {
 
     @Autowired
     private OrderLogMapper orderLogMapper;
+
+    @Autowired
+    private StockManager stockManager;
 
     @Override
     public TradeVo getTrade() {
@@ -84,6 +90,11 @@ public class OrderInfoServiceImpl implements OrderInfoService {
         return tradeVo;
     }
 
+    /**
+     * 1. 生成订单
+     * 2. 检查库存 & 锁库存
+     */
+    @Transactional
     @Override
     public Long submitOrder(OrderInfoDto orderInfoDto) {
         List<OrderItem> orderItemList = orderInfoDto.getOrderItemList();
@@ -116,9 +127,27 @@ public class OrderInfoServiceImpl implements OrderInfoService {
 
     private OrderInfo setOrderInfo(OrderInfoDto orderInfoDto, List<OrderItem> orderItemList) {
         UserInfo userInfo = AuthContextUtil.getUserInfo();
+        String orderNo = String.valueOf(System.currentTimeMillis());
+
+        // ToDo: 检查库存 & 锁库存
+        for (OrderItem item : orderItemList) {
+            Long skuId = item.getSkuId();
+            Integer num = item.getSkuNum();
+
+            // 初始化库存（如果Redis中不存在）
+            ProductSku sku = productFeignClient.getBySkuId(skuId);
+            stockManager.initStock(skuId, sku.getStockNum());
+
+            // 预占库存
+            boolean locked = stockManager.lockStock(skuId, num, orderNo);
+            if (!locked) {  // 商品 skuId 库存不足
+                throw new MyException(ResultCodeEnum.STOCK_LESS);
+            }
+        }
+
         OrderInfo orderInfo = new OrderInfo();
         //订单编号
-        orderInfo.setOrderNo(String.valueOf(System.currentTimeMillis()));
+        orderInfo.setOrderNo(orderNo);
         //用户id
         orderInfo.setUserId(userInfo.getId());
         //用户昵称
@@ -197,6 +226,9 @@ public class OrderInfoServiceImpl implements OrderInfoService {
     @Override
     public void updateOrderStatus(String orderNo, Integer orderStatus) {
         OrderInfo orderInfo = orderInfoMapper.getByOrderNo(orderNo);
+        if (orderInfo == null) {
+            throw new MyException(ResultCodeEnum.ORDER_ERROR);
+        }
         orderInfo.setOrderStatus(orderStatus);
         orderInfo.setPaymentTime(new Date());
         orderInfo.setPayType(2); // alipay

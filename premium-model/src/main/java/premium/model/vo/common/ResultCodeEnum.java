@@ -14,7 +14,10 @@ public enum ResultCodeEnum {
     NODE_ERROR( 217, "该节点下有子节点，不可以删除"),
     DATA_ERROR(204, "数据异常"),
     ACCOUNT_STOP( 216, "账号已停用"),
-    STOCK_LESS( 219, "库存不足"),
+    ORDER_CANT_CANCELED(218, "订单无法取消"),
+    ORDER_ERROR(219, "订单状态异常"),
+    STOCK_LESS( 220, "库存不足"),
+    STOCK_OPT_ERROR(221, "库存扣减失败"),
     SEND_CODE_SYS_ERROR(8888, "验证码发送失败"),
     ;
 

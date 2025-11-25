@@ -4,12 +4,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.ComponentScan;
 import premium.common.annotation.EnableUserLoginAuthInterceptor;
 import premium.pay.utils.AlipayProperties;
 
 @SpringBootApplication
 @EnableUserLoginAuthInterceptor
 @EnableFeignClients(basePackages = {"premium.feign"})
+@ComponentScan({"premium.stock", "premium.utils"})
 @EnableConfigurationProperties(value = {AlipayProperties.class})
 public class PayApplication {
 

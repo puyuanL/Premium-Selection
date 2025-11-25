@@ -1,17 +1,22 @@
 package premium.pay.service.Impl;
 
 import com.alibaba.fastjson.JSON;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import premium.common.exception.MyException;
 import premium.feign.order.OrderFeignClient;
 import premium.feign.product.ProductFeignClient;
 import premium.model.dto.product.SkuSaleDto;
 import premium.model.entity.order.OrderInfo;
 import premium.model.entity.order.OrderItem;
+import premium.model.entity.order.OrderStatus;
 import premium.model.entity.pay.PaymentInfo;
+import premium.model.vo.common.ResultCodeEnum;
 import premium.pay.mapper.PaymentInfoMapper;
 import premium.pay.service.PaymentInfoService;
+import premium.stock.StockManager;
 
 import java.util.Date;
 import java.util.List;
@@ -28,6 +33,12 @@ public class PaymentInfoServiceImpl implements PaymentInfoService {
 
     @Autowired
     private ProductFeignClient productFeignClient;
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+
+    @Autowired
+    private StockManager stockManager;
 
     /**
      * 保存支付记录
@@ -87,5 +98,33 @@ public class PaymentInfoServiceImpl implements PaymentInfoService {
         }).toList();
         productFeignClient.updateSkuSaleAndStockNum(skuSaleDtoList);
         // ToDo 解决库存超卖问题
+    }
+
+    @Transactional
+    @Override
+    public void updatePaymentStatusToSuccess(String orderNo) {
+        // 根据订单编号查询支付记录
+        PaymentInfo paymentInfo = paymentInfoMapper.getByOrderNo(orderNo);
+        // 支付完成，不需要更新
+        if (paymentInfo.getPaymentStatus() == 1) {
+            return ;
+        }
+        // 直接设置为支付成功状态
+        paymentInfo.setPaymentStatus(1);
+        paymentInfo.setOutTradeNo("SIMULATE_" + System.currentTimeMillis()); // 模拟外部交易号
+        paymentInfo.setCallbackTime(new Date());
+        paymentInfo.setCallbackContent("模拟支付成功");
+        paymentInfoMapper.updatePaymentInfo(paymentInfo);
+
+        // ToDo 解决库存超卖问题 (更新sku库存、销量状态: update -> product, orderInfo, redis)
+        // update Redis
+        boolean deducted = stockManager.deductStock(orderNo);
+        if (!deducted) {
+            throw new MyException(ResultCodeEnum.STOCK_OPT_ERROR);
+        }
+        // update MySQL(product)
+        rabbitTemplate.convertAndSend("stock-exchange", "stock.deduct", orderNo);
+        // update orderInfo
+        orderFeignClient.updateOrderStatus(paymentInfo.getOrderNo(), OrderStatus.PAID.getCode());
     }
 }

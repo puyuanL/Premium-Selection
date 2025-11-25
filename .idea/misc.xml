@@ -8,6 +8,11 @@
         <option value="$PROJECT_DIR$/premium-common/pom.xml" />
       </list>
     </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/premium-service/service-stock/pom.xml" />
+      </set>
+    </option>
   </component>
   <component name="ProjectResources">
     <resource url="http://mybatis.org/dtd/mybatis-3-mapper.dtd" location="$PROJECT_DIR$" />

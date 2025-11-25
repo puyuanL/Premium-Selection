@@ -26,6 +26,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="premium-service11" target="17" />
+      <module name="service-stock" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
@@ -46,6 +47,7 @@
       <module name="service-pay" options="-parameters" />
       <module name="service-product" options="-parameters" />
       <module name="service-product-client" options="-parameters" />
+      <module name="service-stock" options="-parameters" />
       <module name="service-user" options="-parameters" />
       <module name="service-user-client" options="-parameters" />
     </option>

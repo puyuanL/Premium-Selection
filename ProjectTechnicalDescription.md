@@ -166,7 +166,5 @@
 
 3、高并发调用测试
 
-
-
-
+docker run -id --name=rabbitmq -v /usr/local/docker/rabbitmq:/var/lib/rabbitmq -p 15672:15672 -p 5672:5672 -e RABBITMQ_DEFAULT_USER=admin -e RABBITMQ_DEFAULT_PASS=lpy123 rabbitmq:management
 
