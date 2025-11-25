@@ -121,7 +121,7 @@
         <if test="remark != null and remark != ''">
             remark=#{remark},
         </if>
-        <if test="cancelTime != null and cancelTime != ''">
+        <if test="cancelTime != null">
             cancel_time=#{cancelTime},
         </if>
         <if test="cancelReason != null and cancelReason != ''">

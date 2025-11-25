@@ -11,7 +11,7 @@ import premium.pay.utils.AlipayProperties;
 @SpringBootApplication
 @EnableUserLoginAuthInterceptor
 @EnableFeignClients(basePackages = {"premium.feign"})
-@ComponentScan({"premium.stock", "premium.utils"})
+@ComponentScan({"premium.stock", "premium.utils", "premium.pay"})
 @EnableConfigurationProperties(value = {AlipayProperties.class})
 public class PayApplication {
 

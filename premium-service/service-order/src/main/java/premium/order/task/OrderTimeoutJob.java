@@ -24,20 +24,16 @@ public class OrderTimeoutJob {
     @Autowired
     private OrderCancelServiceImpl orderCancelService;
 
-    // 每5分钟执行一次
-    @Scheduled(cron = "0 */5 * * * ?")
+    // 每1分钟执行一次
+    @Scheduled(cron = "0 */1 * * * ?")
     public void handleTimeoutOrders() {
-        // 查询超时未支付的订单（超过30分钟）
-        Date timeoutTime = new Date(System.currentTimeMillis() - 30 * 60 * 1000);
+        // 查询超时未支付的订单（超过10分钟）
+        Date timeoutTime = new Date(System.currentTimeMillis() - 10 * 60 * 1000);
         List<OrderInfo> timeoutOrders = orderInfoMapper.selectTimeoutOrders(OrderStatus.WAIT_PAYMENT.getCode(), timeoutTime);
 
         // 取消订单并释放库存
         for (OrderInfo order : timeoutOrders) {
-            try {
-                orderCancelService.cancelOrder(order.getOrderNo());
-            } catch (Exception e) {
-                throw new MyException(ResultCodeEnum.ORDER_CANT_CANCELED);
-            }
+            orderCancelService.cancelOrder(order.getOrderNo());
         }
     }
 }

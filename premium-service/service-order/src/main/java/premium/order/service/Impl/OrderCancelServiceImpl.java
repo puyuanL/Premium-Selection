@@ -34,6 +34,7 @@ public class OrderCancelServiceImpl implements OrderCancelService {
         // 2. 更新订单状态为已取消
         orderInfo.setOrderStatus(OrderStatus.CANCELLED.getCode());
         orderInfo.setCancelTime(new Date());
+        orderInfo.setCancelReason("支付超时");
         orderInfoMapper.updateById(orderInfo);
 
         // 3. 释放预占库存

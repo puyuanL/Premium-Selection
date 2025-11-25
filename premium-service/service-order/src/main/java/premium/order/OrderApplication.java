@@ -9,7 +9,7 @@ import premium.common.annotation.EnableUserTokenFeignInterceptor;
 
 @SpringBootApplication
 @EnableFeignClients(basePackages = {"premium.feign"})
-@ComponentScan(basePackages = {"premium.utils", "premium.stock"})
+@ComponentScan(basePackages = {"premium.utils", "premium.stock", "premium.order"})
 @EnableUserTokenFeignInterceptor
 @EnableUserLoginAuthInterceptor
 public class OrderApplication {
