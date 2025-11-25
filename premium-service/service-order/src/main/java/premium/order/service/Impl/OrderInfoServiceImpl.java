@@ -4,6 +4,7 @@ import com.alibaba.nacos.client.naming.utils.CollectionUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import premium.common.exception.MyException;
@@ -19,6 +20,7 @@ import premium.model.entity.order.OrderStatus;
 import premium.model.entity.product.ProductSku;
 import premium.model.entity.user.UserAddress;
 import premium.model.entity.user.UserInfo;
+import premium.model.redis.RedisKey;
 import premium.model.vo.common.ResultCodeEnum;
 import premium.model.vo.h5.TradeVo;
 import premium.order.mapper.OrderInfoMapper;
@@ -53,6 +55,9 @@ public class OrderInfoServiceImpl implements OrderInfoService {
 
     @Autowired
     private OrderLogMapper orderLogMapper;
+
+    @Autowired
+    private RedisTemplate<String, String> redisTemplate;
 
     @Autowired
     private StockManager stockManager;
@@ -129,14 +134,16 @@ public class OrderInfoServiceImpl implements OrderInfoService {
         UserInfo userInfo = AuthContextUtil.getUserInfo();
         String orderNo = String.valueOf(System.currentTimeMillis());
 
-        // ToDo: 检查库存 & 锁库存
+        // 检查库存 & 锁库存
         for (OrderItem item : orderItemList) {
             Long skuId = item.getSkuId();
             Integer num = item.getSkuNum();
 
-            // 初始化库存（如果Redis中不存在）
-            ProductSku sku = productFeignClient.getBySkuId(skuId);
-            stockManager.initStock(skuId, sku.getStockNum());
+            // 检查Redis中有没有库存信息 -> 初始化库存（如果Redis中不存在）
+            if(redisTemplate.opsForValue().get(RedisKey.STOCK_REAL_KEY + skuId.toString()) == null) {
+                ProductSku sku = productFeignClient.getBySkuId(skuId);
+                stockManager.initStock(skuId, sku.getStockNum());
+            }
 
             // 预占库存
             boolean locked = stockManager.lockStock(skuId, num, orderNo);

@@ -25,10 +25,10 @@ public class OrderTimeoutJob {
     private OrderCancelServiceImpl orderCancelService;
 
     // 每1分钟执行一次
-    @Scheduled(cron = "0 */1 * * * ?")
+    @Scheduled(cron = "0 */5 * * * ?")
     public void handleTimeoutOrders() {
         // 查询超时未支付的订单（超过10分钟）
-        Date timeoutTime = new Date(System.currentTimeMillis() - 10 * 60 * 1000);
+        Date timeoutTime = new Date(System.currentTimeMillis() - 15 * 60 * 1000);
         List<OrderInfo> timeoutOrders = orderInfoMapper.selectTimeoutOrders(OrderStatus.WAIT_PAYMENT.getCode(), timeoutTime);
 
         // 取消订单并释放库存

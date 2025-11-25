@@ -18,6 +18,7 @@ public enum ResultCodeEnum {
     ORDER_ERROR(219, "订单状态异常"),
     STOCK_LESS( 220, "库存不足"),
     STOCK_OPT_ERROR(221, "库存扣减失败"),
+    SYSTEM_BUSY(222, "系统繁忙"),
     SEND_CODE_SYS_ERROR(8888, "验证码发送失败"),
     ;
 

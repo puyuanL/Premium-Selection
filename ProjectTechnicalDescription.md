@@ -172,7 +172,15 @@
 >     ├── 支付成功 → 扣减数据库库存 → 订单发货
 >     └── 超时/取消 → 释放Redis预占库存 → 订单关闭
 >
-> ​	用户点击下单，前端向后端发送请求，
+> ​	用户点击下单，前端向后端发送请求，生成订单请求。后端将商品库存信息加载到Redis中，并在Redis中预占库存（若商品信息已在Redis中，直接预占库存，库存不足则抛出异常）。
+> ​	若支付成功，则扣减Redis中库存（删除预占库存 & 并扣减真实库存），使用 RabbitMQ 异步修改数据库信息，并且远程调用 service微服务修改订单信息为支付完成。
+>
+> 
+>
+> **Redis锁优化：**
+>
+> ​	带有重试机制（**指数退避 + 随机抖动**）的 Redis锁获取，防止大量请求在同一时间点集中重试，减少 Redis 的瞬时压力。
+> ​	加锁时，会生成线程的 UUID，并将其作为Redis的value。解锁时，会校验线程传入的UUID并对比value进行校验（使用Lua脚本保证操作的原子性）
 
 
 
@@ -182,5 +190,5 @@
 
 3、高并发调用测试
 
-docker run -id --name=rabbitmq -v /usr/local/docker/rabbitmq:/var/lib/rabbitmq -p 15672:15672 -p 5672:5672 -e RABBITMQ_DEFAULT_USER=admin -e RABBITMQ_DEFAULT_PASS=lpy123 rabbitmq:management
+
 

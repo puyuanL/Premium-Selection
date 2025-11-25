@@ -116,7 +116,7 @@ public class PaymentInfoServiceImpl implements PaymentInfoService {
         paymentInfo.setCallbackContent("模拟支付成功");
         paymentInfoMapper.updatePaymentInfo(paymentInfo);
 
-        // ToDo 解决库存超卖问题 (更新sku库存、销量状态: update -> product, orderInfo, redis)
+        // 解决库存超卖问题 (更新sku库存、销量状态: update -> product, orderInfo, redis)
         // update Redis
         boolean deducted = stockManager.deductStock(orderNo);
         if (!deducted) {
