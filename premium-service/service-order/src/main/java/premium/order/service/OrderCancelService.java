@@ -1,5 +1,5 @@
 package premium.order.service;
 
 public interface OrderCancelService {
-    void cancelOrder(String orderNo);
+    void cancelOrder(Long orderId);
 }

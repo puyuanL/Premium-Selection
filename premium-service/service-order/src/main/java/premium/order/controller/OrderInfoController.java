@@ -66,7 +66,7 @@ public class OrderInfoController {
     }
 
     /**
-     * 远程调用——根据订单编号获取订单信息
+     * 远程调用 —— 根据订单编号获取订单信息
      */
     @GetMapping("/auth/getOrderInfoByOrderNo/{orderNo}")
     public OrderInfo getOrderInfoByOrderNo(@PathVariable String orderNo) {
@@ -74,7 +74,7 @@ public class OrderInfoController {
     }
 
     /**
-     * 更新订单支付状态
+     * 远程调用 —— 更新订单支付状态
      */
     @GetMapping("/auth/updateOrderStatusPayed/{orderNo}/{orderStatus}")
     public Result updateOrderStatus(@PathVariable(value = "orderNo") String orderNo ,

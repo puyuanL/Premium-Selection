@@ -22,6 +22,7 @@
         <module name="service-cart" />
         <module name="service-cart-client" />
         <module name="premium-model" />
+        <module name="service-test" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -48,6 +49,7 @@
       <module name="service-product" options="-parameters" />
       <module name="service-product-client" options="-parameters" />
       <module name="service-stock" options="-parameters" />
+      <module name="service-test" options="-parameters" />
       <module name="service-user" options="-parameters" />
       <module name="service-user-client" options="-parameters" />
     </option>

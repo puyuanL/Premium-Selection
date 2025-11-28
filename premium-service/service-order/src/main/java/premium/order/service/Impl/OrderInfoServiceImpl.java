@@ -34,6 +34,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class OrderInfoServiceImpl implements OrderInfoService {
@@ -132,7 +133,8 @@ public class OrderInfoServiceImpl implements OrderInfoService {
 
     private OrderInfo setOrderInfo(OrderInfoDto orderInfoDto, List<OrderItem> orderItemList) {
         UserInfo userInfo = AuthContextUtil.getUserInfo();
-        String orderNo = String.valueOf(System.currentTimeMillis());
+        String orderNo = String.valueOf(UUID.randomUUID());
+//        String orderNo = String.valueOf(System.currentTimeMillis());
 
         // 检查库存 & 锁库存
         for (OrderItem item : orderItemList) {

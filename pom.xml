@@ -15,6 +15,7 @@
         <module>premium-server-gateway</module>
         <module>premium-service-client</module>
         <module>premium-service</module>
+        <module>service-test</module>
     </modules>
 
     <parent>

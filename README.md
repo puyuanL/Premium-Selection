@@ -37,6 +37,7 @@ RabbitMQ:
 
     Account:    admin
     Password:   lpy123
+    Management Console:     http://172.18.91.89:15672/
 
 ## 客户端
 

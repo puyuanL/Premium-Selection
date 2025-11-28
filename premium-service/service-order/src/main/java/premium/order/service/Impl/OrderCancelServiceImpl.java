@@ -24,9 +24,9 @@ public class OrderCancelServiceImpl implements OrderCancelService {
 
     @Transactional
     @Override
-    public void cancelOrder(String orderNo) {
+    public void cancelOrder(Long orderId) {
         // 1. 检查订单状态
-        OrderInfo orderInfo = orderInfoMapper.getByOrderNo(orderNo);
+        OrderInfo orderInfo = orderInfoMapper.getById(orderId);
         if (orderInfo == null || !OrderStatus.WAIT_PAYMENT.getCode().equals(orderInfo.getOrderStatus())) {
             throw new MyException(ResultCodeEnum.ORDER_CANT_CANCELED);
         }
@@ -38,6 +38,6 @@ public class OrderCancelServiceImpl implements OrderCancelService {
         orderInfoMapper.updateById(orderInfo);
 
         // 3. 释放预占库存
-        stockManager.releaseStock(orderNo);
+        stockManager.releaseStock(orderInfo.getOrderNo());
     }
 }
