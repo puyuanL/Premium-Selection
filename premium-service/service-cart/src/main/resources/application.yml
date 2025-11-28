@@ -3,6 +3,8 @@
 #    active: dev
 
 spring:
+  profiles:
+    active: dev
   cloud:
     nacos:
       config:

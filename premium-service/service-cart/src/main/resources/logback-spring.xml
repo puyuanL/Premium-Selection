@@ -4,7 +4,7 @@
     <contextName>logback</contextName>
 
     <!-- 日志的输出目录 -->
-    <property name="log.path" value="E://JavaProj//Projects//PremiumSelection//premium_logs" />
+    <property name="log.path" value="E://JavaProj//Projects//PremiumSelection//premium_logs/" />
 
     <!--控制台日志格式：彩色日志-->
     <!-- magenta:洋红 -->
@@ -34,7 +34,7 @@
 
     <!-- 文件日志 -->
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-        <file>${log.path}//log_manager.log</file>
+        <file>${log.path}//log_cart.log</file>
         <append>true</append>
         <encoder>
             <pattern>%date{yyyy-MM-dd HH:mm:ss} %msg%n</pattern>
