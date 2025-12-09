@@ -4,10 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import premium.common.exception.MyException;
 import premium.model.entity.order.OrderInfo;
 import premium.model.entity.order.OrderStatus;
-import premium.model.vo.common.ResultCodeEnum;
 import premium.order.mapper.OrderInfoMapper;
 import premium.order.service.Impl.OrderCancelServiceImpl;
 

@@ -3,6 +3,8 @@ package premium.pay.controller;
 //import com.alipay.api.AlipayApiException;
 //import com.alipay.api.internal.util.AlipaySignature;
 //import jakarta.servlet.http.HttpServletRequest;
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
+import com.alibaba.csp.sentinel.slots.block.BlockException;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,11 +33,16 @@ public class AlipayController {
     /**
      * 支付宝支付
      */
+    @SentinelResource(value = "alipay_submit", blockHandler = "submitAlipayBlockHandler")
     @GetMapping("/submitAlipay/{orderNo}")
     @ResponseBody
     public Result submitAlipay(@PathVariable("orderNo") String orderNo) {
         String form = alipayService.submitAlipay(orderNo);
         return Result.build(form, ResultCodeEnum.SUCCESS);
+    }
+
+    public static Result submitAlipayBlockHandler(String orderNo, BlockException e) {
+        return Result.build(null, ResultCodeEnum.SYSTEM_BUSY);
     }
 
 //    /**

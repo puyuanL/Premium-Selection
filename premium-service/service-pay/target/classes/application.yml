@@ -9,6 +9,15 @@ spring:
     nacos:
       config:
         server-addr: 172.18.91.89:8848
+    sentinel:
+      datasource:
+        ds2:
+          nacos:
+            server-addr: 172.18.91.89:8848
+            data-id: alibaba-sentinel-rules-pay
+            group-id: SENTINEL_GROUP
+            data-type: json
+            rule-type: flow
   config:
     import:
       - nacos:server-pay-dev.yml

@@ -1,6 +1,10 @@
 package premium.order.controller;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
+import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.github.pagehelper.PageInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import premium.model.dto.h5.OrderInfoDto;
@@ -13,6 +17,7 @@ import premium.order.service.OrderInfoService;
 @RestController
 @RequestMapping(value="/api/order/orderInfo")
 public class OrderInfoController {
+//    private static final Logger log = LoggerFactory.getLogger(OrderInfoController.class);
 
     @Autowired
     private OrderInfoService orderInfoService;
@@ -30,10 +35,21 @@ public class OrderInfoController {
     /**
      * 生成订单
      */
+    @SentinelResource(value = "order_submit", blockHandler = "submitOrderBlockHandler")
     @PostMapping("/auth/submitOrder")
     public Result<Long> submitOrder(@RequestBody OrderInfoDto orderInfoDto) {
         Long orderId = orderInfoService.submitOrder(orderInfoDto);
         return Result.build(orderId, ResultCodeEnum.SUCCESS);
+    }
+
+    public static Result<Long> submitOrderBlockHandler(OrderInfoDto orderInfoDto, BlockException e) {
+//        log.warn("[Sentinel limit] Sentinel_Resource: {}, type: {}, Exception Info: {}",
+//                "order_submit",
+//                e.getClass().getSimpleName(),
+//                e.getMessage(),
+//                e // Logback 自动打印异常栈
+//        );
+        return Result.build(null, ResultCodeEnum.SYSTEM_BUSY);
     }
 
     /**

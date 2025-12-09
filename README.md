@@ -9,7 +9,7 @@ Swagger Test Back: http://localhost:8501/doc.html#/home
 
 Swagger Test Front: http://localhost:8512/doc.html#/home
 
-### WSL
+### WSL (docker)
 
 Minio
 
@@ -38,6 +38,12 @@ RabbitMQ:
     Account:    admin
     Password:   lpy123
     Management Console:     http://172.18.91.89:15672/
+
+Sentinel:
+
+    Acocunt:    sentinel
+    Password:   sentinel
+    Management Console:     http://172.18.91.89:8858/
 
 ## 客户端
 

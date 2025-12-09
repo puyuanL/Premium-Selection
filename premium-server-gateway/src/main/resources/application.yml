@@ -6,6 +6,10 @@ spring:
     nacos:
       config:
         server-addr: 172.18.91.89:8848
+        extension-configs:
+          - data-id: alibaba-sentinel-client-rules
+            group: DEFAULT_GROUP
+            refresh: true
   config:
     import:
       - nacos:server-gateway-dev.yml
