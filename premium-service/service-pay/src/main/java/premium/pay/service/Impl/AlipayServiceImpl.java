@@ -72,6 +72,9 @@ public class AlipayServiceImpl implements AlipayService {
     public String submitAlipay(String orderNo) {
         // 保存支付记录
         PaymentInfo paymentInfo = paymentInfoService.savePaymentInfo(orderNo);
+        if (paymentInfo.getPaymentStatus().equals(1)) {
+            return "PLEASE DON'T PAY DUPLICATE";
+        }
         // 直接模拟支付成功，调用状态更新方法
         paymentInfoService.updatePaymentStatusToSuccess(orderNo);
         return "SUCCESS";

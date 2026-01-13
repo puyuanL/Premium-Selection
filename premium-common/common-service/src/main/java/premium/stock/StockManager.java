@@ -76,6 +76,7 @@ public class StockManager {
      * 支付成功后扣减实际库存
      * @param orderNo 订单号
      * @return 是否成功
+     * don't need use redis lock
      */
     public boolean deductStock(String orderNo) {
         String orderStockKey = RedisKey.ORDER_STOCK_KEY + orderNo;
@@ -110,6 +111,7 @@ public class StockManager {
      * 取消订单时释放预占库存
      * @param orderNo 订单号
      * @return 是否成功
+     * don't need use redis lock
      */
     public boolean releaseStock(String orderNo) {
         String orderStockKey = RedisKey.ORDER_STOCK_KEY + orderNo;
